@@ -66,37 +66,24 @@ void highGoal() {
 ///
 void drive_example() {
 
-  intakeBalls();
   highGoalHood.set(true);
   
-  chassis.pid_odom_set(29_in, DRIVE_SPEED, false);
+  chassis.pid_odom_set(23_in, DRIVE_SPEED, false);
   chassis.pid_wait();
-  
-  chassis.pid_odom_set(3_in, DRIVE_SPEED*0.3, false);
-  chassis.pid_wait(); 
-
-  chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
-  chassis.pid_wait(); 
-
-  chassis.pid_odom_set(3_in, DRIVE_SPEED, false);
-  chassis.pid_wait();
-
-  pros::delay(200);
-
-  chassis.pid_odom_set(-5.50_in, DRIVE_SPEED, false);
-  chassis.pid_wait(); 
 
   pros::delay(200); 
   
   chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
   
+  intakeBalls();
   matchLoader.set(true); 
+  pros::delay(200); 
 
-  chassis.pid_odom_set(5_in, DRIVE_SPEED, false);
+  chassis.pid_odom_set(5.4_in, DRIVE_SPEED, false);
   chassis.pid_wait(); 
 
-  pros::delay(500); 
+  pros::delay(400); 
 
   chassis.pid_odom_set(-5_in, DRIVE_SPEED, false);
   chassis.pid_wait(); 
@@ -105,7 +92,7 @@ void drive_example() {
 
   pros::delay(200);
 
-  chassis.pid_turn_set(-86_deg, TURN_SPEED);
+  chassis.pid_turn_set(-85_deg, TURN_SPEED);
   chassis.pid_wait();
 
   pros::delay(200);
@@ -117,11 +104,12 @@ void drive_example() {
   //chassis.pid_wait();
 
   //pros::delay(200);
+  highGoal();
 
   chassis.pid_odom_set(7_in, DRIVE_SPEED, false);
   chassis.pid_wait(); 
 
-  highGoal();
+  
 }
 
 

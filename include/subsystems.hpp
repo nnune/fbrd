@@ -16,6 +16,6 @@ inline ez::Piston highGoalHood('A');
 inline ez::Piston matchLoader('B');
 inline ez::Piston descorer('C');
 
-//inline pros::Optical optical_sensor(3);
+inline pros::Optical optical_sensor(3);
 
 // inline pros::adi::DigitalIn limit_switch('A');

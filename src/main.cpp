@@ -229,13 +229,7 @@ void ez_template_extras() {
 }
 
 void intakeBallsOps() {
-    //optical_sensor.set_light(pros::E_OPTICAL_LIGHT_MODE_ON);
-    //optical_sensor.set_led_pwm(100);
-
     intakeRoller.move(127);
-    //if (optical_sensor.get_hue() > 200 && optical_sensor.get_hue() < 250) 
-    //   basketRollerFront.move(-127);
-    //else
     basketRollerFront.move(127);
     basketRollerBack.move(127);
 }
@@ -264,8 +258,8 @@ void highGoalOps() {
 void stopMotors() {
   intakeRoller.move(0);
   basketRollerFront.move(0);
-    basketRollerBack.move(0);
-    highGoalRoller.move(0);
+  basketRollerBack.move(0);
+  highGoalRoller.move(0);
 }
 
 /**
@@ -289,6 +283,7 @@ void opcontrol() {
 
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
+    bool intakeEnabled;
 
     chassis.opcontrol_tank();  // Tank control
     // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -299,24 +294,40 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+    if(intakeEnabled)
+    {
+      optical_sensor.set_led_pwm(100);
+      double hueValue;
+      hueValue = optical_sensor.get_hue();
+      if (hueValue > 200 && hueValue < 250) 
+        basketRollerFront.move(0);
+       else
+         basketRollerFront.move(127);  
+    }
+
     if (master.get_digital(DIGITAL_A)) {
       intakeBallsOps();
+      intakeEnabled = true;
     }
 
     if (master.get_digital(DIGITAL_X)) {
       stopMotors();
+      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_DOWN)) {
       lowGoalOps();
+      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_UP)) {
       highGoalOps();
+      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_LEFT)) {
       middleGoalOps();
+      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_Y)) {
