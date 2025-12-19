@@ -48,24 +48,82 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
+void intakeBalls() {
+    intakeRoller.move(127);
+    basketRollerFront.move(127);
+    basketRollerBack.move(127);
+}
+
+void highGoal() {
+    intakeRoller.move(127);
+    basketRollerFront.move(-127);
+    basketRollerBack.move(-127);
+    highGoalRoller.move(127);
+}
+
 ///
 // Drive Example
 ///
 void drive_example() {
-  // The first parameter is target inches
-  // The second parameter is max speed the robot will drive at
-  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-  // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, false);
-  chassis.pid_wait_quick();
+  intakeBalls();
+  highGoalHood.set(true);
+  
+  chassis.pid_odom_set(29_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+  
+  chassis.pid_odom_set(3_in, DRIVE_SPEED*0.3, false);
+  chassis.pid_wait(); 
 
-  //chassis.pid_drive_set(-24_in, DRIVE_SPEED);
+  chassis.pid_odom_set(-3_in, DRIVE_SPEED, false);
+  chassis.pid_wait(); 
+
+  chassis.pid_odom_set(3_in, DRIVE_SPEED, false);
+  chassis.pid_wait();
+
+  pros::delay(200);
+
+  chassis.pid_odom_set(-5.50_in, DRIVE_SPEED, false);
+  chassis.pid_wait(); 
+
+  pros::delay(200); 
+  
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  
+  matchLoader.set(true); 
+
+  chassis.pid_odom_set(5_in, DRIVE_SPEED, false);
+  chassis.pid_wait(); 
+
+  pros::delay(500); 
+
+  chassis.pid_odom_set(-5_in, DRIVE_SPEED, false);
+  chassis.pid_wait(); 
+
+  matchLoader.set(false); 
+
+  pros::delay(200);
+
+  chassis.pid_turn_set(-86_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  pros::delay(200);
+
+  //chassis.pid_odom_set(.75_in, DRIVE_SPEED, false);
+  //chassis.pid_wait(); 
+
+  //chassis.pid_turn_set(-90_deg, TURN_SPEED);
   //chassis.pid_wait();
 
-  //chassis.pid_drive_set(-12_in, DRIVE_SPEED);
-  //chassis.pid_wait();
+  //pros::delay(200);
+
+  chassis.pid_odom_set(7_in, DRIVE_SPEED, false);
+  chassis.pid_wait(); 
+
+  highGoal();
 }
+
 
 ///
 // Turn Example
@@ -254,13 +312,14 @@ void odom_drive_example() {
   // You can replace pid_drive_set with pid_odom_set and your robot will
   // have better error correction.
 
-  chassis.pid_odom_set(24_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(24_in, DRIVE_SPEED, false);
   chassis.pid_wait();
   
-   chassis.pid_turn_set(180_deg, TURN_SPEED);
-  chassis.pid_wait();
+  pros::delay(200); 
+  // chassis.pid_turn_set(180_deg, TURN_SPEED);
+  //chassis.pid_wait();
 
-  chassis.pid_odom_set(24_in, DRIVE_SPEED);
+  chassis.pid_odom_set(-24_in, DRIVE_SPEED, false);
   chassis.pid_wait();
 
      chassis.pid_turn_set(360_deg, TURN_SPEED);

@@ -59,7 +59,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      //{"Drive\n\nDrive forward and come back", drive_example},
+      {"Drive and collect 3 balls", drive_example},
      //{"Turn\n\nTurn 3 times.", turn_example},
       {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
       {"Turn\n\nTurn 3 times.", turn_example},
@@ -228,6 +228,46 @@ void ez_template_extras() {
   }
 }
 
+void intakeBallsOps() {
+    //optical_sensor.set_light(pros::E_OPTICAL_LIGHT_MODE_ON);
+    //optical_sensor.set_led_pwm(100);
+
+    intakeRoller.move(127);
+    //if (optical_sensor.get_hue() > 200 && optical_sensor.get_hue() < 250) 
+    //   basketRollerFront.move(-127);
+    //else
+    basketRollerFront.move(127);
+    basketRollerBack.move(127);
+}
+
+void lowGoalOps() {
+    intakeRoller.move(-100);
+    basketRollerFront.move(-100);
+    basketRollerBack.move(-127);
+    highGoalRoller.move(127);
+}
+
+void middleGoalOps() {
+    intakeRoller.move(127);
+    basketRollerFront.move(-127);
+    basketRollerBack.move(-127);
+    highGoalRoller.move(-127);
+}
+
+void highGoalOps() {
+    intakeRoller.move(127);
+    basketRollerFront.move(-127);
+    basketRollerBack.move(-127);
+    highGoalRoller.move(127);
+}
+
+void stopMotors() {
+  intakeRoller.move(0);
+  basketRollerFront.move(0);
+    basketRollerBack.move(0);
+    highGoalRoller.move(0);
+}
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -246,6 +286,7 @@ void opcontrol() {
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
 
   while (true) {
+
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
 
@@ -258,7 +299,50 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+    if (master.get_digital(DIGITAL_A)) {
+      intakeBallsOps();
+    }
 
+    if (master.get_digital(DIGITAL_X)) {
+      stopMotors();
+    }
+
+    if (master.get_digital(DIGITAL_DOWN)) {
+      lowGoalOps();
+    }
+
+    if (master.get_digital(DIGITAL_UP)) {
+      highGoalOps();
+    }
+
+    if (master.get_digital(DIGITAL_LEFT)) {
+      middleGoalOps();
+    }
+
+    if (master.get_digital(DIGITAL_Y)) {
+      highGoalHood.set(true);
+    }
+
+    if (master.get_digital(DIGITAL_B)) {
+      highGoalHood.set(false);
+      stopMotors();
+    }
+
+    if (master.get_digital(DIGITAL_L2)) {
+      matchLoader.set(true);
+    }
+
+    if (master.get_digital(DIGITAL_L1)) {
+      matchLoader.set(false);
+    }
+
+    if (master.get_digital(DIGITAL_R1)) {
+      descorer.set(true);
+    }
+
+    if (master.get_digital(DIGITAL_R2)) {
+      descorer.set(false);
+    }
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
