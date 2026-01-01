@@ -230,35 +230,30 @@ void ez_template_extras() {
 
 void intakeBallsOps() {
     intakeRoller.move(127);
-    basketRollerFront.move(127);
-    basketRollerBack.move(127);
+    middleRoller.move(127);
 }
 
 void lowGoalOps() {
-    intakeRoller.move(-100);
-    basketRollerFront.move(-100);
-    basketRollerBack.move(-127);
-    highGoalRoller.move(127);
+    intakeRoller.move(-127);
+    middleRoller.move(-127);
+    highGoalRoller.move(-127);
 }
 
 void middleGoalOps() {
     intakeRoller.move(127);
-    basketRollerFront.move(-127);
-    basketRollerBack.move(-127);
+    middleRoller.move(127);
     highGoalRoller.move(-127);
 }
 
 void highGoalOps() {
-    intakeRoller.move(127);
-    basketRollerFront.move(-127);
-    basketRollerBack.move(-127);
-    highGoalRoller.move(127);
+  intakeRoller.move(127);
+  middleRoller.move(127);
+  highGoalRoller.move(127);
 }
 
 void stopMotors() {
   intakeRoller.move(0);
-  basketRollerFront.move(0);
-  basketRollerBack.move(0);
+  middleRoller.move(0);
   highGoalRoller.move(0);
 }
 
@@ -331,28 +326,28 @@ void opcontrol() {
     }
 
     if (master.get_digital(DIGITAL_Y)) {
-      highGoalHood.set(true);
+      //highGoalHood.set(true);
     }
 
     if (master.get_digital(DIGITAL_B)) {
-      highGoalHood.set(false);
+      //highGoalHood.set(false);
       stopMotors();
     }
 
     if (master.get_digital(DIGITAL_L2)) {
-      matchLoader.set(true);
+      //matchLoader.set(true);
     }
 
     if (master.get_digital(DIGITAL_L1)) {
-      matchLoader.set(false);
+      //matchLoader.set(false);
     }
 
     if (master.get_digital(DIGITAL_R1)) {
-      descorer.set(true);
+      //descorer.set(true);
     }
 
     if (master.get_digital(DIGITAL_R2)) {
-      descorer.set(false);
+      //descorer.set(false);
     }
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
