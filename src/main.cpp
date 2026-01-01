@@ -8,11 +8,11 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-17, -18},     // Left Chassis Ports (negative port will reverse it!)
-    {14, 15,},  // Right Chassis Ports (negative port will reverse it!)
+    {-1, 2, -3},     // Left Chassis Ports (negative port will reverse it!)
+    {11, -12, 13,},  // Right Chassis Ports (negative port will reverse it!)
 
     8,      // IMU Port
-    3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     266);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
@@ -20,8 +20,8 @@ ez::Drive chassis(
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(19, 2.0, 5.5);  // This tracking wheel is perpendicular to the drive wheels
-ez::tracking_wheel vert_tracker(5, 2,0, 2.0);   // This tracking wheel is parallel to the drive wheels
+//ez::tracking_wheel horiz_tracker(19, 2.0, 5.5);  // This tracking wheel is perpendicular to the drive wheels
+//ez::tracking_wheel vert_tracker(5, 2,0, 2.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -42,8 +42,8 @@ void initialize() {
   // Look at your vertical tracking wheel and decide if it's to the left or right of the center of the robot
   //  - change `left` to `right` if the tracking wheel is to the right of the centerline
   //  - ignore this if you aren't using a vertical tracker
-  chassis.odom_tracker_left_set(&vert_tracker);
-  chassis.odom_tracker_back_set(&horiz_tracker);
+  //chassis.odom_tracker_left_set(&vert_tracker);
+  //chassis.odom_tracker_back_set(&horiz_tracker);
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
@@ -294,16 +294,16 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-    if(intakeEnabled)
+    /*if(intakeEnabled)
     {
       optical_sensor.set_led_pwm(100);
       double hueValue;
       hueValue = optical_sensor.get_hue();
       if (hueValue > 200 && hueValue < 250) 
-        basketRollerFront.move(0);
+        basketRollerFront.move(-127);
        else
          basketRollerFront.move(127);  
-    }
+    }*/
 
     if (master.get_digital(DIGITAL_A)) {
       intakeBallsOps();
