@@ -7,14 +7,14 @@ extern Drive chassis;
 
 // Your motors, sensors, etc. should go here.  Below are examples
 
-inline pros::Motor intakeRoller(4);
-inline pros::Motor middleRoller(5);
-inline pros::Motor highGoalRoller(-6);
+inline pros::Motor intakeRoller(-7);
+inline pros::Motor middleRoller(4);
+inline pros::Motor highGoalRoller(6);
 
-//inline ez::Piston highGoalHood('A');
-//inline ez::Piston matchLoader('B');
-//inline ez::Piston descorer('C');
-
+inline ez::Piston highGoalHood('A');
+inline ez::Piston matchLoader('A');
+inline ez::Piston descorerLeft('C');
+inline ez::Piston descorerRight('D');
 //2inline pros::Optical optical_sensor(3);
 
 // inline pros::adi::DigitalIn limit_switch('A');

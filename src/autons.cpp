@@ -50,14 +50,14 @@ void default_constants() {
 
 void intakeBalls() {
     intakeRoller.move(127);
-    basketRollerFront.move(127);
-    basketRollerBack.move(127);
+    //basketRollerFront.move(127);
+    //basketRollerBack.move(127);
 }
 
 void highGoal() {
     intakeRoller.move(127);
-    basketRollerFront.move(-127);
-    basketRollerBack.move(-127);
+    //basketRollerFront.move(-127);
+    //basketRollerBack.move(-127);
     highGoalRoller.move(127);
 }
 
@@ -66,41 +66,7 @@ void highGoal() {
 ///
 void drive_example() {
 
-  highGoalHood.set(true);
   
-  chassis.pid_odom_set(18.5_in, DRIVE_SPEED, false);
-  chassis.pid_wait();
-
-  pros::delay(200); 
-  
-  chassis.pid_turn_set(-90_deg, TURN_SPEED);
-  chassis.pid_wait();
-  
-  intakeBalls();
-  matchLoader.set(true); 
-  pros::delay(200); 
-
-  chassis.pid_odom_set(5.5_in, DRIVE_SPEED, false);
-  chassis.pid_wait(); 
-
-  pros::delay(400); 
-
-  chassis.pid_odom_set(-5_in, DRIVE_SPEED, false);
-  chassis.pid_wait(); 
-
-  matchLoader.set(false); 
-
-  pros::delay(200);
-
-  chassis.pid_turn_set(90_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-  pros::delay(200);
-
-  highGoal();
-
-  chassis.pid_odom_set(7_in, DRIVE_SPEED, false);
-  chassis.pid_wait(); 
 
   
   

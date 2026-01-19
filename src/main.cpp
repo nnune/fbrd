@@ -8,12 +8,12 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-1, 2, -3},     // Left Chassis Ports (negative port will reverse it!)
-    {11, -12, 13,},  // Right Chassis Ports (negative port will reverse it!)
+    {-10, 9, -8},     // Left Chassis Ports (negative port will reverse it!)
+    {1, -2, 3,},  // Right Chassis Ports (negative port will reverse it!)
 
-    8,      // IMU Port
+    11,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    266);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+    600);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -21,7 +21,7 @@ ez::Drive chassis(
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
 //ez::tracking_wheel horiz_tracker(19, 2.0, 5.5);  // This tracking wheel is perpendicular to the drive wheels
-//ez::tracking_wheel vert_tracker(5, 2,0, 2.0);   // This tracking wheel is parallel to the drive wheels
+ez::tracking_wheel vert_tracker(12, 2,0, 2.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -228,25 +228,22 @@ void ez_template_extras() {
   }
 }
 
-void intakeBallsOps() {
-    intakeRoller.move(127);
-    middleRoller.move(127);
-}
+
 
 void lowGoalOps() {
-    intakeRoller.move(-127);
+    intakeRoller.move(127);
     middleRoller.move(-127);
     highGoalRoller.move(-127);
 }
 
 void middleGoalOps() {
-    intakeRoller.move(127);
+    intakeRoller.move(-127);
     middleRoller.move(127);
     highGoalRoller.move(-127);
 }
 
 void highGoalOps() {
-  intakeRoller.move(127);
+  intakeRoller.move(-127);
   middleRoller.move(127);
   highGoalRoller.move(127);
 }
@@ -272,13 +269,32 @@ void stopMotors() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
+  /**
+   * Key Map
+   * X - Stop all motors
+   * A
+   * B - High Goal Hood Off
+   * Y - High goal Hood On
+   * 
+   * Up - High Goal
+   * Down - Low Goal
+   * Left - Middle Goal
+   * Right
+   * 
+   * L1 - Toogle Left Descorer
+   * R1 - Toggle Right Descorer
+   * L2 - Match Loader On
+   * R2 - Match Loader Off
+   * 
+   */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
 
   while (true) {
 
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
-    bool intakeEnabled;
+    bool leftDescorerOn;
+    bool rightDescorerOn;
 
     chassis.opcontrol_tank();  // Tank control
     // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -300,55 +316,51 @@ void opcontrol() {
          basketRollerFront.move(127);  
     }*/
 
-    if (master.get_digital(DIGITAL_A)) {
-      intakeBallsOps();
-      intakeEnabled = true;
-    }
 
     if (master.get_digital(DIGITAL_X)) {
       stopMotors();
-      intakeEnabled = false;
+      //intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_DOWN)) {
       lowGoalOps();
-      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_UP)) {
       highGoalOps();
-      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_LEFT)) {
       middleGoalOps();
-      intakeEnabled = false;
     }
 
     if (master.get_digital(DIGITAL_Y)) {
-      //highGoalHood.set(true);
+      highGoalHood.set(true);
     }
 
     if (master.get_digital(DIGITAL_B)) {
-      //highGoalHood.set(false);
-      stopMotors();
+      highGoalHood.set(false);
+      //stopMotors();
     }
-
     if (master.get_digital(DIGITAL_L2)) {
-      //matchLoader.set(true);
-    }
-
-    if (master.get_digital(DIGITAL_L1)) {
-      //matchLoader.set(false);
-    }
-
-    if (master.get_digital(DIGITAL_R1)) {
-      //descorer.set(true);
+      matchLoader.set(true);
     }
 
     if (master.get_digital(DIGITAL_R2)) {
-      //descorer.set(false);
+      matchLoader.set(false);
     }
+
+    if (master.get_digital(DIGITAL_L1)) {
+      leftDescorerOn = !leftDescorerOn;
+      descorerLeft.set(leftDescorerOn);
+
+    }
+
+    if (master.get_digital(DIGITAL_R1)) {
+      rightDescorerOn = !rightDescorerOn;
+      descorerRight.set(rightDescorerOn);
+    }
+
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
