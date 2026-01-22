@@ -272,14 +272,14 @@ void opcontrol() {
   /**
    * Key Map
    * X - Stop all motors
-   * A
+   * A - Match loader up
    * B - High Goal Hood Off
    * Y - High goal Hood On
    * 
    * Up - High Goal
    * Down - Low Goal
    * Left - Middle Goal
-   * Right
+   * Right - Match loader down
    * 
    * L1 - Toogle Left Descorer
    * R1 - Toggle Right Descorer
@@ -288,13 +288,13 @@ void opcontrol() {
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-
+    bool leftDescorerOn= false;
+    bool rightDescorerOn = false;
   while (true) {
 
     // Gives you some extras to make EZ-Template ezier
     ez_template_extras();
-    bool leftDescorerOn;
-    bool rightDescorerOn;
+
 
     chassis.opcontrol_tank();  // Tank control
     // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -342,23 +342,29 @@ void opcontrol() {
       highGoalHood.set(false);
       //stopMotors();
     }
-    if (master.get_digital(DIGITAL_L2)) {
+    if (master.get_digital(DIGITAL_A)) {
       matchLoader.set(true);
     }
 
-    if (master.get_digital(DIGITAL_R2)) {
+    if (master.get_digital(DIGITAL_RIGHT)) {
       matchLoader.set(false);
     }
 
     if (master.get_digital(DIGITAL_L1)) {
-      leftDescorerOn = !leftDescorerOn;
-      descorerLeft.set(leftDescorerOn);
-
+      //leftDescorerOn = !leftDescorerOn;
+          descorerRight.set(true);
     }
-
     if (master.get_digital(DIGITAL_R1)) {
-      rightDescorerOn = !rightDescorerOn;
-      descorerRight.set(rightDescorerOn);
+      //leftDescorerOn = !leftDescorerOn;
+          descorerRight.set(false);
+    }
+    if (master.get_digital(DIGITAL_L2)) {
+      //leftDescorerOn = !leftDescorerOn;
+          descorerLeft.set(true);
+    }
+    if (master.get_digital(DIGITAL_R2)) {
+      //leftDescorerOn = !leftDescorerOn;
+          descorerLeft.set(false);
     }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

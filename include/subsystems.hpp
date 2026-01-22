@@ -12,9 +12,9 @@ inline pros::Motor middleRoller(4);
 inline pros::Motor highGoalRoller(6);
 
 inline ez::Piston highGoalHood('A');
-inline ez::Piston matchLoader('A');
-inline ez::Piston descorerLeft('C');
-inline ez::Piston descorerRight('D');
+inline ez::Piston matchLoader('D');
+inline ez::Piston descorerLeft('H');
+inline ez::Piston descorerRight('C');
 //2inline pros::Optical optical_sensor(3);
 
 // inline pros::adi::DigitalIn limit_switch('A');
