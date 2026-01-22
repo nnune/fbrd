@@ -272,19 +272,19 @@ void opcontrol() {
   /**
    * Key Map
    * X - Stop all motors
-   * A - Match loader up
+   * A 
    * B - High Goal Hood Off
    * Y - High goal Hood On
    * 
    * Up - High Goal
    * Down - Low Goal
    * Left - Middle Goal
-   * Right - Match loader down
+   * Right
    * 
-   * L1 - Right Descorer On
-   * R1 - Right Descorer Off
-   * L2 - Left Descorer On
-   * R2 - Left Descorer Off
+   * L1 - Left Descorer Toggle
+   * R1 - Right Descorer Toggle
+   * L2 - Match Descorer Off
+   * R2 - Match Loader Off
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
@@ -342,30 +342,16 @@ void opcontrol() {
       highGoalHood.set(false);
       //stopMotors();
     }
-    if (master.get_digital(DIGITAL_A)) {
+    if (master.get_digital(DIGITAL_L2)) {
       matchLoader.set(true);
     }
 
-    if (master.get_digital(DIGITAL_RIGHT)) {
+    if (master.get_digital(DIGITAL_R2)) {
       matchLoader.set(false);
     }
 
-    if (master.get_digital(DIGITAL_L1)) {
-      //leftDescorerOn = !leftDescorerOn;
-          descorerRight.set(true);
-    }
-    if (master.get_digital(DIGITAL_R1)) {
-      //leftDescorerOn = !leftDescorerOn;
-          descorerRight.set(false);
-    }
-    if (master.get_digital(DIGITAL_L2)) {
-      //leftDescorerOn = !leftDescorerOn;
-          descorerLeft.set(true);
-    }
-    if (master.get_digital(DIGITAL_R2)) {
-      //leftDescorerOn = !leftDescorerOn;
-          descorerLeft.set(false);
-    }
+    descorerRight.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
+    descorerLeft.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
