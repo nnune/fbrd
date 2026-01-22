@@ -281,10 +281,10 @@ void opcontrol() {
    * Left - Middle Goal
    * Right - Match loader down
    * 
-   * L1 - Toogle Left Descorer
-   * R1 - Toggle Right Descorer
-   * L2 - Match Loader On
-   * R2 - Match Loader Off
+   * L1 - Right Descorer On
+   * R1 - Right Descorer Off
+   * L2 - Left Descorer On
+   * R2 - Left Descorer Off
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
