@@ -96,8 +96,8 @@ void high_goal_only() {
   chassis.pid_odom_set(5.4_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(-0.7_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
+  //chassis.pid_odom_set(-0.2_in, DRIVE_SPEED, true);
+  //chassis.pid_wait();
   pros::delay(1300);
 
   chassis.pid_odom_set(-22_in, 70, true);
