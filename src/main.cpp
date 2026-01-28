@@ -288,13 +288,12 @@ void opcontrol() {
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+  bool descorerOn = false;
 
   while (true) {
 
     // Gives you some extras to make EZ-Template ezier
-    ez_template_extras();
-    bool leftDescorerOn;
-    bool rightDescorerOn;
+    ez_template_extras(); 
 
     chassis.opcontrol_tank();  // Tank control
     // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -350,15 +349,10 @@ void opcontrol() {
       matchLoader.set(false);
     }
 
-    if (master.get_digital(DIGITAL_L1)) {
-      leftDescorerOn = !leftDescorerOn;
-      descorerLeft.set(leftDescorerOn);
-
-    }
-
-    if (master.get_digital(DIGITAL_R1)) {
-      rightDescorerOn = !rightDescorerOn;
-      descorerRight.set(rightDescorerOn);
+    if (master.get_digital_new_press(DIGITAL_L1)) {
+      descorerOn = !descorerOn;
+      descorerLeft.set(descorerOn);
+      descorerRight.set(descorerOn);
     }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

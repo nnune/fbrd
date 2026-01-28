@@ -6,7 +6,7 @@
 /////
 
 // These are out of 127
-const int DRIVE_SPEED = 110;
+const int DRIVE_SPEED = 127;
 const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
 
@@ -15,7 +15,7 @@ const int SWING_SPEED = 110;
 ///
 void default_constants() {
   // P, I, D, and Start I
-  chassis.pid_drive_constants_set(20.0, 0.0, 20.0);         // Fwd/rev constants, used for odom and non odom motions
+  chassis.pid_drive_constants_set(20, 0.0, 30.0);         // Fwd/rev constants, used for odom and non odom motions
   chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
   chassis.pid_turn_constants_set(5.0, 0.05, 30.0, 15.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
@@ -64,18 +64,93 @@ void highGoal() {
 ///
 // Drive Example
 ///
-void drive_example() {
+void high_goal_only() {
+  intakeRoller.move(-127);
+  middleRoller.move(127);
+  highGoalRoller.move(127);
 
-  
+  descorerLeft.set(true);
+  descorerRight.set(true);
 
-  
-  
+  chassis.pid_odom_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(30_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(6.7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(137.4_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(16.5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  matchLoader.set(true);
+  pros::delay(500);
+
+  chassis.pid_odom_set(5.4_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(-0.7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(1300);
+
+  chassis.pid_odom_set(-22_in, 70, true);
+  chassis.pid_wait();
+
+  highGoalHood.set(true);
+
+  chassis.pid_odom_set(0.8_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
 }
 
+void red_high_goal_only() {
+  high_goal_only();
+}
 
+void blue_high_goal_only() {
+  chassis.odom_x_flip();
+  chassis.odom_theta_flip();
+  high_goal_only();
+}
+void drive_example(){
+  red_high_goal_only();
+}
 ///
 // Turn Example
 ///
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void turn_example() {
   // The first parameter is the target in degrees
   // The second parameter is max speed the robot will drive at
