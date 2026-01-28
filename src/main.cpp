@@ -9,7 +9,7 @@
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {-10, 9, -8},     // Left Chassis Ports (negative port will reverse it!)
-    {1, -2, 3,},  // Right Chassis Ports (negative port will reverse it!)
+    {1, -2, 3},  // Right Chassis Ports (negative port will reverse it!)
 
     11,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -272,7 +272,7 @@ void opcontrol() {
   /**
    * Key Map
    * X - Stop all motors
-   * A
+   * A 
    * B - High Goal Hood Off
    * Y - High goal Hood On
    * 
@@ -281,14 +281,13 @@ void opcontrol() {
    * Left - Middle Goal
    * Right
    * 
-   * L1 - Toogle Left Descorer
-   * R1 - Toggle Right Descorer
-   * L2 - Match Loader On
+   * L1 - Left Descorer Toggle
+   * R1 - Right Descorer Toggle
+   * L2 - Match Descorer Off
    * R2 - Match Loader Off
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-  bool descorerOn = false;
 
   while (true) {
 
@@ -349,11 +348,8 @@ void opcontrol() {
       matchLoader.set(false);
     }
 
-    if (master.get_digital_new_press(DIGITAL_L1)) {
-      descorerOn = !descorerOn;
-      descorerLeft.set(descorerOn);
-      descorerRight.set(descorerOn);
-    }
+    descorerRight.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
+    descorerLeft.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
