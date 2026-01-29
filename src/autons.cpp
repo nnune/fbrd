@@ -65,6 +65,8 @@ void highGoal() {
 // Drive Example
 ///
 void high_goal_only() {
+ 
+
   intakeRoller.move(-127);
   middleRoller.move(127);
   highGoalRoller.move(127);
@@ -103,9 +105,36 @@ void high_goal_only() {
   chassis.pid_odom_set(-22_in, 70, true);
   chassis.pid_wait();
 
+  descorerLeft.set(false);
+  descorerRight.set(false);
+
   highGoalHood.set(true);
 
   chassis.pid_odom_set(0.8_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  pros::delay(3000);
+
+
+
+
+
+
+  chassis.pid_odom_set(5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(120_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(-4.2_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  
+
+  chassis.pid_odom_set(-12_in,70, true);
   chassis.pid_wait();
 
 }
@@ -121,36 +150,11 @@ void blue_high_goal_only() {
 }
 void drive_example(){
   red_high_goal_only();
+
 }
 ///
 // Turn Example
 ///
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void turn_example() {
   // The first parameter is the target in degrees
   // The second parameter is max speed the robot will drive at
