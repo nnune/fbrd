@@ -62,7 +62,7 @@ void initialize() {
       {"Drive and collect 3 balls", drive_example},
      //{"Turn\n\nTurn 3 times.", turn_example},
       {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
+      //{"Turn\n\nTurn 3 times.", turn_example},
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
       {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
       {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
