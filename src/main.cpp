@@ -59,6 +59,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      {"Solo Auto WP", Solo_Auto_WP},
+      {"Right Side High Goal Only", RightSide_High_Goal_Only},
+      {"Left Side High Goal Only", LeftSide_High_Goal_Only},
       {"Drive and collect 3 balls", drive_example},
      //{"Turn\n\nTurn 3 times.", turn_example},
       {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
@@ -252,6 +255,7 @@ void stopMotors() {
   intakeRoller.move(0);
   middleRoller.move(0);
   highGoalRoller.move(0);
+  highGoalHood.set(false);
 }
 
 /**
@@ -332,24 +336,10 @@ void opcontrol() {
       middleGoalOps();
     }
 
-    if (master.get_digital(DIGITAL_Y)) {
-      highGoalHood.set(true);
-    }
-
-    if (master.get_digital(DIGITAL_B)) {
-      highGoalHood.set(false);
-      //stopMotors();
-    }
-    if (master.get_digital(DIGITAL_L2)) {
-      matchLoader.set(true);
-    }
-
-    if (master.get_digital(DIGITAL_R2)) {
-      matchLoader.set(false);
-    }
-
+    highGoalHood.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y));
+    matchLoader.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2));
     descorerRight.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
-    descorerLeft.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
+    descorerLeft.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

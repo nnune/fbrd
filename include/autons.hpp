@@ -2,6 +2,9 @@
 
 void default_constants();
 
+void RightSide_High_Goal_Only();
+void LeftSide_High_Goal_Only();
+void Solo_Auto_WP();
 void drive_example();
 void turn_example();
 void drive_and_turn();

@@ -24,10 +24,11 @@ void default_constants() {
 
   // Exit conditions
   chassis.pid_turn_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
-  chassis.pid_swing_exit_condition_set(90_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  chassis.pid_swing_exit_condition_set(90_ms, 3_deg, 225_ms, 7_deg, 400_ms, 500_ms);
   chassis.pid_drive_exit_condition_set(90_ms, 1_in, 250_ms, 3_in, 500_ms, 500_ms);
   chassis.pid_odom_turn_exit_condition_set(90_ms, 3_deg, 225_ms, 7_deg, 220_ms, 750_ms);
   chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 225_ms, 3_in, 220_ms, 750_ms);
+
   chassis.pid_turn_chain_constant_set(3_deg);
   chassis.pid_swing_chain_constant_set(5_deg);
   chassis.pid_drive_chain_constant_set(3_in);
@@ -64,9 +65,8 @@ void highGoal() {
 ///
 // Drive Example
 ///
-void high_goal_only() {
+void High_Goal_Only() {
  
-
   intakeRoller.move(-127);
   middleRoller.move(127);
   highGoalRoller.move(127);
@@ -132,22 +132,23 @@ void high_goal_only() {
 
 }
 
-void red_high_goal_only() {
-  high_goal_only();
+void RightSide_High_Goal_Only() {
+  High_Goal_Only();
 }
 
-void blue_high_goal_only() {
+void LeftSide_High_Goal_Only() {
   chassis.odom_x_flip();
   chassis.odom_theta_flip();
-  high_goal_only();
+  High_Goal_Only();
 }
 
 ///
 // Turn Example
 ///
-void sawp() {
-  chassis.pid_drive_constants_set(20, 0.0, 40);
-
+void Solo_Auto_WP() {
+  chassis.pid_drive_constants_set(22, 0.0, 40);
+  
+  chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 150_ms, 3_in, 150_ms, 750_ms);
 
   intakeRoller.move(-127);
   middleRoller.move(127);
@@ -156,33 +157,31 @@ void sawp() {
   chassis.pid_odom_set(5_in, DRIVE_SPEED, false);
   chassis.pid_wait();
 
+  //matchLoader.set(true);
   chassis.pid_odom_set(-25.5_in, DRIVE_SPEED, false);
   chassis.pid_wait();
 
   chassis.pid_turn_set(-90_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  matchLoader.set(true);
-  pros::delay(325);
+  //chassis.pid_odom_set(6.3_in, DRIVE_SPEED, false);
+  //chassis.pid_wait();
 
-  chassis.pid_odom_set(5.65_in, DRIVE_SPEED, false);
-  chassis.pid_wait();
+  //pros::delay(520);
 
-  pros::delay(920);
-
-  chassis.pid_odom_set(-22_in, 70, false);
+  chassis.pid_odom_set(-16.65_in, 80, false);
   chassis.pid_wait();
 
   highGoalHood.set(true);
-  matchLoader.set(false);
+  //matchLoader.set(false);
 
   chassis.pid_odom_set(0.8_in, DRIVE_SPEED, false);
   chassis.pid_wait();
   chassis.pid_turn_set(-90_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  pros::delay(1500);
-
+  pros::delay(300);
+  chassis.pid_drive_constants_set(35, 0.0, 40);
   highGoalHood.set(false);
 
   //  chassis.pid_odom_set(8_in, DRIVE_SPEED, false);
@@ -190,66 +189,76 @@ void sawp() {
 
   // chassis.pid_turn_set(45_deg, TURN_SPEED);
   //chassis.pid_wait();
+
+  chassis.pid_swing_set(ez::LEFT_SWING, 28_deg, 70, -127);
+  chassis.pid_wait();
+
+  //chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 220_ms, 3_in, 220_ms, 750_ms);
+  //chassis.pid_odom_turn_exit_condition_set(90_ms, 3_deg, 225_ms, 7_deg, 350_ms, 750_ms);
+
+ 
+  chassis.pid_odom_set(5.5_in, 100, false);
+  chassis.pid_wait();
+  chassis.pid_odom_set(1_in, 100, false);
+  matchLoader.set(true);
+  chassis.pid_wait();
   
-  chassis.pid_swing_set(ez::LEFT_SWING, 23_deg, 70, -127);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(7_in, 100, false);
-  chassis.pid_wait();
-
   chassis.pid_turn_set(0_deg, TURN_SPEED);
   chassis.pid_wait();
-  pros::delay(300);
+  matchLoader.set(false);
+  //pros::delay(300);
 
-  chassis.pid_odom_set(17_in, 127, false);
+  chassis.pid_odom_set(20.2_in, 127, false);
+  chassis.pid_wait();
+  chassis.pid_odom_set(1.5_in, 127, false);
+  matchLoader.set(true);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(4.5_in, 50, false);
-  chassis.pid_wait();
-  
+  chassis.pid_drive_constants_set(22, 0.0, 40);
+  matchLoader.set(false);
+
   chassis.pid_turn_set(-45_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(-10_in, 50, false);
+  chassis.pid_odom_set(-7.5_in, 50, false);
   chassis.pid_wait();
 
   intakeRoller.move(0);
   middleRoller.move(20);
   highGoalRoller.move(-127);
-  pros::delay(1000);
+  pros::delay(500);
   highGoalRoller.move(127);
   middleRoller.move(127);
   intakeRoller.move(-127);
 
-  chassis.pid_odom_set(23_in, 127, false);
+  chassis.pid_odom_set(21.8_in, 127, false);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  //matchLoader.set(true);
+  //chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  //chassis.pid_wait();
+  
+  //chassis.pid_odom_set(9_in, DRIVE_SPEED, false);
+  //chassis.pid_wait();
+
+  //pros::delay(300);
+
+  chassis.pid_drive_constants_set(35, 0.0, 40);
+
+  chassis.pid_odom_set(-15.65_in, 85, false);
   chassis.pid_wait();
-
-  matchLoader.set(true);
-  chassis.pid_wait();
-
-  chassis.pid_odom_set(6.7_in, DRIVE_SPEED, false);
-  chassis.pid_wait();
-
-  pros::delay(830);
-
-  chassis.pid_odom_set(-22_in, 70, false);
-  chassis.pid_wait();
-
-  highGoalHood.set(true);
 
   chassis.pid_odom_set(0.8_in, DRIVE_SPEED, false);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(-90_deg, TURN_SPEED);
-  chassis.pid_wait();
+  highGoalHood.set(true);
+  
 
+  
 }
 
 void drive_example() {
-  sawp();
+  Solo_Auto_WP();
 }
 ///
 // Combining Turn + Drive
