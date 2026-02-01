@@ -235,8 +235,8 @@ void Solo_Auto_WP() {
   chassis.pid_wait();
 
   //matchLoader.set(true);
-  //chassis.pid_turn_set(-90_deg, TURN_SPEED);
-  //chassis.pid_wait();
+  chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  chassis.pid_wait();
   
   //chassis.pid_odom_set(9_in, DRIVE_SPEED, false);
   //chassis.pid_wait();
@@ -245,7 +245,7 @@ void Solo_Auto_WP() {
 
   chassis.pid_drive_constants_set(35, 0.0, 40);
 
-  chassis.pid_odom_set(-15.65_in, 85, false);
+  chassis.pid_odom_set(-16.65_in, 85, true);
   chassis.pid_wait();
 
   chassis.pid_odom_set(0.8_in, DRIVE_SPEED, false);
