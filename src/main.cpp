@@ -20,7 +20,7 @@ ez::Drive chassis(
 //  - you should get positive values on the encoders going FORWARD and RIGHT
 // - `2.75` is the wheel diameter
 // - `4.0` is the distance from the center of the wheel to the center of the robot
-ez::tracking_wheel horiz_tracker(13, 2.0, 5.5);  // This tracking wheel is perpendicular to the drive wheels
+ez::tracking_wheel horiz_tracker(13, 2.0, 6);  // This tracking wheel is perpendicular to the drive wheels
 ez::tracking_wheel vert_tracker(-12, 2.75, 2.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
@@ -59,10 +59,13 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+     {"Skills Auton", skills_auton},
       {"Right Side High Goal Only", RightSide_High_Goal_Only},
       {"Solo Auto WP", Solo_Auto_WP},
       {"Right Middle High", MiddleHigh_Right},
       {"Left Side High Goal Only", LeftSide_High_Goal_Only}
+     
+    
   });
 
   // Initialize chassis and auton selector
