@@ -229,15 +229,15 @@ void lowGoalOps() {
 }
 
 void middleGoalOps() {
-    intakeRoller.move(-127);
-    middleRoller.move(127);
-    highGoalRoller.move(-127);
+    intakeRoller.move(-60);
+    middleRoller.move(60);
+    highGoalRoller.move(-60);
 }
 
 void highGoalOps() {
-  intakeRoller.move(-60);
-  middleRoller.move(60);
-  highGoalRoller.move(60);
+  intakeRoller.move(-127);
+  middleRoller.move(127);
+  highGoalRoller.move(127);
 }
 
 void stopMotors() {

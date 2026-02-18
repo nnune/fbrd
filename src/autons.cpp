@@ -379,7 +379,7 @@ void Solo_Auto_WP(){
   chassis.pid_turn_set(137.4_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(15.2_in, 80, true);
+  chassis.pid_odom_set(15.8_in, 80, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
@@ -423,7 +423,7 @@ void Solo_Auto_WP(){
   chassis.pid_turn_set(45_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(8.7_in,70, true);
+  chassis.pid_odom_set(7.75_in,70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(0_deg, TURN_SPEED);
@@ -490,9 +490,6 @@ void Solo_Auto_WP(){
 
   pros::delay(3000);
   
-  
-  highGoalHood.set(false);
-
   matchLoader.set(false);
   pros::delay(500);
   
@@ -501,6 +498,8 @@ void Solo_Auto_WP(){
 
   chassis.pid_turn_set(-90_deg, TURN_SPEED);
   chassis.pid_wait();
+
+  highGoalHood.set(false);
 
   chassis.pid_odom_set(46_in, 90, true);
   chassis.pid_wait();
@@ -516,7 +515,7 @@ void Solo_Auto_WP(){
   highGoalRoller.move(127);
 
 
-  chassis.pid_odom_set(12_in,70, true);
+  chassis.pid_odom_set(12.75_in,70, true);
   chassis.pid_wait();
 
   pros::delay(1300);
@@ -546,7 +545,7 @@ void Solo_Auto_WP(){
   chassis.pid_turn_set(-135_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(8.5_in,70, true);
+  chassis.pid_odom_set(9_in,70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
@@ -554,6 +553,12 @@ void Solo_Auto_WP(){
 
   chassis.pid_odom_set(-11_in,70, true);
   chassis.pid_wait();
+
+  //chassis.pid_odom_set(5_in, 70, true);
+  //chassis.pid_wait();
+
+  // chassis.pid_odom_set(-6_in, 120, true);
+  //chassis.pid_wait();
 
   highGoalHood.set(true);
 
@@ -581,7 +586,7 @@ void Solo_Auto_WP(){
   chassis.pid_odom_set(20_in,70, true);
   chassis.pid_wait();
 
-  pros::delay(1000);
+  pros::delay(1325);
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait();
@@ -604,8 +609,30 @@ void Solo_Auto_WP(){
 
   pros::delay(3000);
 
+  highGoalHood.set(false);
+
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait();
+
+   chassis.pid_odom_set(5_in,70, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(10_in, 127, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+   chassis.pid_odom_set(20_in, 127, true);
+  chassis.pid_wait();
+
+
+
+
+
 
 
 
