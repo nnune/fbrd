@@ -10,6 +10,9 @@ const int DRIVE_SPEED = 127;
 const int TURN_SPEED = 90;
 const int SWING_SPEED = 110;
 
+//extern ez::tracking_wheel horiz_tracker;  // This tracking wheel is perpendicular to the drive wheels
+extern ez::tracking_wheel vert_tracker;   // This tracking wheel is parallel to the drive wheels
+
 ///
 // Constants
 ///
@@ -120,7 +123,7 @@ void High_Goal_Only() {
   chassis.pid_odom_set(0.8_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
-  pros::delay(3000);
+  pros::delay(2500);
 
   chassis.pid_odom_set(5_in, DRIVE_SPEED, true);
   chassis.pid_wait();
@@ -343,14 +346,13 @@ void Solo_Auto_WP(){
 
   
   void skills_auton() {
-  chassis.pid_drive_constants_set(20, 0.0, 30);
   
+  chassis.pid_drive_constants_set(25, 0.0, 30.0);
+
   chassis.pid_odom_drive_exit_condition_set(90_ms, 1_in, 220_ms, 3_in, 220_ms, 750_ms);
   chassis.pid_turn_exit_condition_set(90_ms, 3_deg, 220_ms, 7_deg, 220_ms, 500_ms);
+  
 
-  //chassis.pid_odom_turn_exit_condition_set(90_ms, 3_deg, 225_ms, 7_deg, 350_ms, 750_ms);
-
-  chassis.pid_drive_constants_set(25, 0.0, 30.0);
   highGoalHood.set(false);
  
   intakeRoller.move(-127);
@@ -360,7 +362,7 @@ void Solo_Auto_WP(){
   descorerLeft.set(true);
   descorerRight.set(true);
 
-  chassis.pid_odom_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(12_in, 70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(30_deg, TURN_SPEED);
@@ -402,7 +404,7 @@ void Solo_Auto_WP(){
   chassis.pid_wait();
 
   
-  chassis.pid_odom_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(-5_in, 70, true);
   chassis.pid_wait();
  
   chassis.pid_turn_set(120_deg, TURN_SPEED);
@@ -411,7 +413,7 @@ void Solo_Auto_WP(){
   matchLoader.set(false);
   pros::delay(250);
   
-  chassis.pid_odom_set(-7_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(-7_in, 70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
@@ -433,6 +435,7 @@ void Solo_Auto_WP(){
   chassis.pid_wait();
 
   highGoalHood.set(true);
+  //horiz_tracker.reset();
 
   chassis.pid_turn_set(0_deg, TURN_SPEED);
   chassis.pid_wait();
@@ -448,7 +451,7 @@ void Solo_Auto_WP(){
   middleRoller.move(127);
   highGoalRoller.move(127);
 
-  pros::delay(3000);
+  pros::delay(2500);
 
   highGoalHood.set(false);
 
@@ -461,7 +464,7 @@ void Solo_Auto_WP(){
   chassis.pid_odom_set(20_in,70, true);
   chassis.pid_wait();
 
-  pros::delay(1000);
+  pros::delay(1250);
 
   chassis.pid_turn_set(0_deg, TURN_SPEED);
   chassis.pid_wait();
@@ -488,7 +491,7 @@ void Solo_Auto_WP(){
   middleRoller.move(127);
   highGoalRoller.move(127);
 
-  pros::delay(3000);
+  pros::delay(2500);
   
   matchLoader.set(false);
   pros::delay(500);
@@ -501,7 +504,7 @@ void Solo_Auto_WP(){
 
   highGoalHood.set(false);
 
-  chassis.pid_odom_set(46_in, 90, true);
+  chassis.pid_odom_set(48.75_in, 70, true);
   chassis.pid_wait();
 
   matchLoader.set(true);
@@ -515,7 +518,7 @@ void Solo_Auto_WP(){
   highGoalRoller.move(127);
 
 
-  chassis.pid_odom_set(12.75_in,70, true);
+  chassis.pid_odom_set(13_in, 50, true);
   chassis.pid_wait();
 
   pros::delay(1300);
@@ -524,7 +527,7 @@ void Solo_Auto_WP(){
   chassis.pid_wait();
 
   
-  chassis.pid_odom_set(-5_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(-5_in, 70, true);
   chassis.pid_wait();
  
   chassis.pid_turn_set(-60_deg, TURN_SPEED);
@@ -533,7 +536,7 @@ void Solo_Auto_WP(){
   matchLoader.set(false);
   pros::delay(250);
   
-  chassis.pid_odom_set(-7_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(-7_in, 70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(0_deg, TURN_SPEED);
@@ -545,7 +548,7 @@ void Solo_Auto_WP(){
   chassis.pid_turn_set(-135_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(9_in,70, true);
+  chassis.pid_odom_set(5_in,70, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
@@ -562,26 +565,33 @@ void Solo_Auto_WP(){
 
   highGoalHood.set(true);
 
-  chassis.pid_turn_set(180_deg, TURN_SPEED);
-  chassis.pid_wait();
-
-
   intakeRoller.move(127);
   middleRoller.move(-127);
   highGoalRoller.move(-127);
 
-  pros::delay(100);
+  pros::delay(200);
 
   intakeRoller.move(-127);
   middleRoller.move(127);
   highGoalRoller.move(127);
 
-  pros::delay(3000);
+  pros::delay(2500);
 
   highGoalHood.set(false);
 
   matchLoader.set(true);
   pros::delay(500);
+
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+ // chassis.pid_odom_set(2_in,70, true);
+  //chassis.pid_wait();
+
+  //chassis.pid_turn_set(180_deg, TURN_SPEED);
+  //chassis.pid_wait();
+
+
 
   chassis.pid_odom_set(20_in,70, true);
   chassis.pid_wait();
@@ -607,9 +617,11 @@ void Solo_Auto_WP(){
   middleRoller.move(127);
   highGoalRoller.move(127);
 
-  pros::delay(3000);
+  pros::delay(2500);
 
   highGoalHood.set(false);
+
+  matchLoader.set(false);
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait();
@@ -620,7 +632,7 @@ void Solo_Auto_WP(){
   chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(10_in, 127, true);
+  chassis.pid_odom_set(21.75, 127, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, TURN_SPEED);
@@ -628,15 +640,6 @@ void Solo_Auto_WP(){
 
    chassis.pid_odom_set(20_in, 127, true);
   chassis.pid_wait();
-
-
-
-
-
-
-
-
-
 
 
 
