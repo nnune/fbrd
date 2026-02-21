@@ -229,9 +229,15 @@ void lowGoalOps() {
 }
 
 void middleGoalOps() {
-    intakeRoller.move(-60);
-    middleRoller.move(60);
-    highGoalRoller.move(-60);
+    intakeRoller.move(-100);
+    middleRoller.move(127);
+    highGoalRoller.move(-32.5);
+}
+
+void middleGoalOpsSlow() {
+    intakeRoller.move(-45);
+    middleRoller.move(45);
+    highGoalRoller.move(-45);
 }
 
 void highGoalOps() {
@@ -281,6 +287,7 @@ void opcontrol() {
    * 
    */
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
+  bool button_was_pressed = false;
 
   while (true) {
 
@@ -313,6 +320,10 @@ void opcontrol() {
       //intakeEnabled = false;
     }
 
+    if (master.get_digital(DIGITAL_R2)) {
+      middleGoalOpsSlow();
+    }
+
     if (master.get_digital(DIGITAL_DOWN)) {
       lowGoalOps();
     }
@@ -325,7 +336,22 @@ void opcontrol() {
       middleGoalOps();
     }
 
-    highGoalHood.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y));
+    if (master.get_digital_new_press(DIGITAL_R1)) {
+
+      highGoalHood.set(true);
+      button_was_pressed = true;
+    }
+
+    if (!master.get_digital(DIGITAL_R1) && button_was_pressed) {
+
+      highGoalHood.set(false);
+      button_was_pressed = false;
+    }
+
+  
+    
+
+    //highGoalHood.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
     matchLoader.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2));
     descorerRight.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
     descorerLeft.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1));
